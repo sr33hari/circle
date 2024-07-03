@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Sandbox</title>
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename= 'css/styles.css') }}">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body >
+
+  <header class="sidebar">
+    <div class="logo-container">
+        <img onclick="openModelPage('/home')" src="{{ url_for('static', filename= 'images/logo.webp') }}" alt="Circle Logo" class="logo">
+    </div>
+    <nav class="navigation">
+        <ul class="navigation-menu">
+            <li class="menu-item"><a onclick="openModelPage('Datasets')">Data Sets</a></li>
+            <li class="menu-item"><a onclick="openModelPage('TrainModels')">Train Models</a></li>
+            <li class="menu-item"><a onclick="openModelPage('Pretrained_Models')">Pretrained Models</a></li>
+            <li class="menu-item"><a>Reports</a></li>
+            <li class="menu-item"><a>Settings</a></li>
+        </ul>
+    </nav>
+    <div class="logout-container">
+        <a onclick="openModelPage('logout')">Log out</a>
+    </div>
+</header>
+  
+    <div class="main-content">
+        <div class="model-block" style="margin: 2px; margin-top: 50px; padding: 20px;"><h1 style="margin: 2px; ">Linear Regression</h1> </div>
+        <div class="table-container">
+            
+            <table class="custom-table">
+              <tr>
+                <td class="col-40 rounded-corners" style="background-color: #85C8FF;">
+                    <div style="text-align: left; padding-left: 30px;">
+                        <p class="nameheading" style="color: var(--h2-color);">Model Used:</p> 
+                        <p class="namecontent" style="color: #273469; font-weight: bolder;">Linear Regression</p>
+                        <p class="nameheading" style="color: var(--h2-color);">Data Set Used:</p> 
+                        <p class="namecontent" style="color: #273469; font-weight: bolder;">California Housing Dataset</p>
+                        <p class="nameheading" style="color: var(--h2-color);">Training data size</p> 
+                        <p class="namecontent" style="color: #273469; font-weight: bolder;">80%</p>
+                    </div>
+                </td>
+                <td class="col-20">
+                  <table class="inner-table">
+                    <tr>
+                      <td class="bubble"> RMSE: 1.7</td>
+                    </tr>
+                    <tr>
+                      <td class="bubble"> R squared: 0.89 </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="col-40 rounded-corners" style="background-color: #85C8FF;">
+                    <div style="text-align: left; padding-left: 30px;">
+                        <p class="nameheading" style="color: var(--h2-color);">Most effecting features:</p> 
+                        <p class="namecontent" style="padding-bottom: 40px; color: #273469; font-weight: bolder;">total_rooms, median_house_value, population, longitude</p>
+                        
+                        
+                    </div>
+                </td>
+              </tr>
+            </table>
+            
+          </div>
+          <div class="model-block" style="margin: 2px; margin-top: 50px; padding: 20px;"><h1 style="margin: 2px; "> Model Explained</h1> </div>
+          <div class="table-container">
+            
+            <table class="custom-table">
+              <tr>
+                <td class="col-40s rounded-corners">
+                    <div style="text-align: left; padding-left: 30px;">
+                        <img id="dependency plot" alt="Summary Plot" src="/static/images/demo/shap_dependence_testname1.png" alt="correlation plot" style="max-width: 100%;
+                        height: auto;">
+                    </div>
+                </td>
+                  
+                <td class = "col-20s"></td>
+                </td>
+                <td class="col-40s rounded-corners">
+                    <div style="text-align: left; padding-left: 30px;">
+                        <p class="nameheading">Dependency plot:</p> 
+                        <p class="namecontent">The dependency plot shows the effect of a single feature across the whole dataset, allowing you to see more detailed relationships between the feature values and the impact on predictions.</p>
+                        <p class="nameheading">How to Interpret:</p>
+                        <p class="namecontent">X-axis: Represents the value of the feature.</p>
+                        <p class="namecontent">Y-axis: Shows the SHAP value for that feature. This indicates how much knowing a feature value changes the prediction from the base value (average model output over the dataset).</p>
+                        <p class="namecontent">Color (optional): Can be used to show another feature, helping to identify interaction effects between features.</p>
+                    </div>
+                </td>
+              </tr>
+            </table>
+
+            <table class="custom-table">
+                <tr>
+                  <td class="col-40s rounded-corners">
+                      <div style="text-align: left; padding-left: 30px;">
+                          <img src="/static/images/demo/shap_summary_testname1.png" alt="Summary plot" style="max-width: 100%;
+                          height: auto;">
+                      </div>
+                  </td>
+                    
+                  <td class = "col-20s"></td>
+ 
+                  </td>
+                  <td class="col-40s rounded-corners">
+                      <div style="text-align: left; padding-left: 30px;">
+                          <p class="nameheading">Summary plot:</p> 
+                          <p class="namecontent">The summary plot is one of the most informative visualizations available in SHAP. It provides a bird's-eye view of the impact of each feature across all the data points.</p>
+                          <p class="nameheading">How to Interpret:</p> 
+                          <p class="namecontent">Features: Each dot on the plot represents a single value of a feature for an instance (data point).</p>
+                          <p class="namecontent">Y-axis: Features are listed in order of importance from top to bottom.</p>
+                          <p class="namecontent">X-axis: SHAP value impact on the prediction. The position of the dot on the horizontal axis indicates whether the effect of that value is to increase or decrease the prediction. A value on the left decreases the prediction, while a value on the right increases it.</p>
+                          <p class="namecontent">Color: Shows the actual value of the feature from low (blue) to high (red). This helps to understand how high or low values of the feature affect the prediction.</p>
+                      </div>
+                  </td>
+                </tr>
+              </table>
+
+              <table class="custom-table">
+                <tr>
+                  <td class="col-40s rounded-corners">
+                      <div style="text-align: left; padding-left: 30px;">
+                          <img src="/static/images/demo/shap_bar_testname1.png" alt="bar plot" style="max-width: 100%;
+                          height: auto;">
+                      </div>
+                  </td>
+                    
+                  <td class = "col-20s"></td>
+ 
+                  </td>
+                  <td class="col-40s rounded-corners">
+                      <div style="text-align: left; padding-left: 30px;">
+                          <p class="nameheading">Bar plot:</p> 
+                          <p class="namecontent">The bar plot provides a simple and straightforward visual representation of feature importance measured by SHAP values across all data. This plot is an excellent starting point for identifying the most significant features according to their average impact on the model's predictions.
+
+                            Each of these plots offers different insights into your model’s behavior, from global trends across all data to the minute details of a single prediction.</p>
+                          <p class="nameheading">How to Interpret:</p> 
+                          <p class="namecontent">X-axis: Represents the average impact (magnitude of SHAP value) of each feature on the model output. The length of the bar indicates the level of importance.</p>
+                          <p class="namecontent">Y-axis: Lists the features.</p>
+
+                      </div>
+                  </td>
+                </tr>
+              </table>
+              <table class="custom-table">
+                <tr>
+                  <td class="col-40s rounded-corners">
+                      <div style="text-align: left; padding-left: 30px;">
+                          <img src="/static/images/demo/shap_waterfall_testname1.png" alt="waterfall plot" style="max-width: 100%;
+                          height: auto;">
+                      </div>
+                  </td>
+                  <td class = "col-20s"></td>
+ 
+                    
+                  </td>
+                  <td class="col-40s rounded-corners">
+                      <div style="text-align: left; padding-left: 30px;">
+                          <p class="nameheading">Waterfall plot:</p> 
+                          <p class="namecontent">The waterfall plot is ideal for understanding the contribution of each feature to a specific prediction, starting from the base value (the average or expected value of the model output).</p>
+                          <p class="nameheading">How to Interpret:</p> 
+                          <p class="namecontent">Base Value: The starting point of the plot, representing the average model prediction over the dataset.</p>
+                          <p class="namecontent">Steps: Each bar represents a feature's contribution to pushing the model output from the base value to the final prediction. Features pushing the prediction higher are shown in one color (e.g., red), while those lowering it are in another (e.g., blue).</p>
+                          <p class="namecontent">End Value: The final prediction made by the model.</p>
+
+                      </div>
+                  </td>
+                </tr>
+              </table>
+              <div class=" rounded-corners iframe-container" style="background-color: #ffffff; padding: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2),
+              0px 6px 20px rgba(0, 0, 0, 0.19),
+              inset 0px 0px 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+                <p class="nameheading">Force Plot (Interactable)</p> 
+                <p class="namecontent"> Interactable force plots allow you to explore individual predictions. They visually decompose the prediction into the contribution of each feature. </p>
+                <p class="nameheading">How to Interpret:</p> 
+                <p class="namecontent">Base Value: Shown as a grey vertical line; this is the starting point of the prediction.</p>
+                <p class="namecontent">Contribution: Each feature’s effect is represented as a force. Features pushing the prediction higher extend to the right, while those lowering it extend to the left.</p>
+                <p class="namecontent">Total Prediction: The endpoint on the right shows the model’s final output.</p>
+                <p class="namecontent">The interactable version of the force plot lets you toggle the visibility of each feature to see how different features interact and the cumulative effect of including various features.</p>
+
+              </div>
+              <div class="iframe-container" style="width: 100%; height: 450px;">
+                <iframe class="col-40 rounded-corners" id="modelDetailsFrame" style="width: 100%; height: 100%; border: none;" src = "/static/images/demo/force_plot_testname1.html">
+                  
+                </iframe>
+              </div>
+          </div>
+    </div>
+
+  <script>
+    function openModelPage(pageName) {
+        window.location.href = pageName;
+      }
+    
+  </script>
+</body>
+</html>

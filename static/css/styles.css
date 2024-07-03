@@ -1,0 +1,906 @@
+:root {
+  --dark-cyan: #85C8FF; /*tiny boxes*/
+  --dark-coral: #ffffff; /*model card*/
+  --dark-lavender: #32A3FF; /* header*/
+  --dark-thistle: #f8f8f8; /*backgroiund*/
+  --dark-khaki: #69BCFF; /*tiny tiny boxes*/
+
+  
+  --dark-cyan: #336699; /*tiny boxes*/
+  --dark-coral: #F0F0F0; /*model card*/
+  --dark-lavender: #00407f; /* header*/
+  --dark-thistle: #f8f8f8; /*backgroiund*/
+  --dark-khaki: #69BCFF; /*tiny tiny boxes*/
+
+  --h2-color: rgb(181, 37, 37);
+
+  --c-action-primary: #2e44ff;
+	--c-action-primary-accent: #e9e5ff;
+	--c-action-secondary: #e5e5e5;
+	--c-text-primary: #0d0f21; 
+	--c-text-secondary: #6a6b76;
+	--c-background-primary:  #f1f1f1;
+
+  --name-heading: #006afe;
+  --name-content: #539bff;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: var(--dark-thistle);
+    background-image: url('../images/background.png');
+    /* Make sure the image covers the whole page */
+    background-size: 50%;
+    /* Set the background to no-repeat if you don't want it to tile */
+    background-repeat: no-repeat;
+    /* Fix the background image so it doesn't move when the content scrolls */
+    background-attachment: fixed;
+  }
+  
+  .sidebar {
+    background-color: #8E7AB5;
+    color: white;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), /* Outer shadow */
+                0px 6px 20px rgba(0, 0, 0, 0.19), /* More diffuse shadow */
+                inset 0px 0px 10px rgba(0, 0, 0, 0.1); /* Inner shadow */
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 120px;
+    padding-top: 50px;
+    
+  }
+  
+  .header {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .metric {
+    background-color: #9c88ff;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+  }
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.metric {
+    flex: 1 1 20%; /* Adjust the basis to control how many boxes per line */
+    background-color: #4a69bd; /* Deep blue shade */
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.metric:hover {
+    transform: translateY(-5px); /* Slight rise effect on hover */
+}
+
+.metric-title {
+    font-size: 1.2rem;
+    color: #ffaa5b; /* Soft coral for titles */
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+  
+  .charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .trend-chart, .sales-chart {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .transactions, .support-tickets, .customer-demographics {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .sidebar {
+    background-color: var(--dark-lavender);
+    color: #ffffff;
+    width: 98%; /* Span the full width of the page */
+    padding: 10px 20px; /* Adjust padding as needed */
+    display: flex;
+    flex-direction: row; /* Align items in a row instead of a column */
+    justify-content: space-between; /* Distribute space between and around content items */
+    align-items: center; /* Center items vertically */
+    height: 50px; /* Adjust height as necessary */
+    position: fixed; /* Keep it fixed at the top of the page */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    z-index: 1000; /* Ensure it stays on top of other content */
+  }
+
+  
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px; /* Adjust spacing as necessary */
+  }
+  
+  .logo {
+    max-width: 100px;
+    height: auto;
+  }
+  
+  .navigation {
+    flex-grow: 1;
+  }
+  
+  .navigation-menu {
+    display: flex;
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    color: #eaeaea;
+  }
+  
+  .navigation-menu .menu-item {
+    margin-right: 20px; /* Add some space between the items */
+  }
+  
+  /* Optional: Remove margin on the last item */
+  .navigation-menu .menu-item:last-child {
+    margin-right: 0;
+  }
+  .completed {
+    color: green;
+}
+.pending {
+    color: orange;
+}
+.failed {
+    color: red;
+}
+
+  .navigation-menu .menu-item a:hover {
+    background-color: #403b62; /* Adjust hover color as necessary */
+  }
+  
+  .logout-container {
+    text-align: center;
+    margin-top: 10px; /* Adjust spacing as necessary */
+  }
+  
+  .logout-link {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px; /* Adjust font size as necessary */
+    transition: color 0.3s ease;
+    margin-bottom: 10px;
+  }
+  
+  .logout-link:hover {
+    color: #c7bddb; /* Adjust hover color as necessary */
+  }
+  
+  .content {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    margin-left: 250px; /* Assuming the sidebar is 250px wide */
+  }
+  
+  .content > div {
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  h2 {
+    color: #312450;
+    margin-bottom: 15px;
+  }
+  
+  .chart {
+    height: 250px; /* Adjust as needed for your chart library */
+    background-color: #eaeaea; /* Placeholder style */
+  }
+  
+  .transactions {
+    background-color: #ffffff;
+  }
+  
+  .transaction-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .transaction-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .view-all {
+    background-color: #9c88ff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .support-tickets {
+    background-color: #ffffff;
+  }
+  
+  .ticket-categories button {
+    padding: 10px;
+    margin-right: 5px;
+    background-color: #eaeaea;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .ticket-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ticket-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .customer-demographic {
+    background-color: #ffffff;
+  }
+  
+  .map {
+    height: 300px; /* Adjust as needed for your map library */
+    background-color: #eaeaea; /* Placeholder style */
+  }
+  
+  /* model css */
+
+  .model-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between model blocks */
+  }
+  
+  .model-block {
+    background-color: var(--dark-coral); /* Dark background for each block */
+    padding: 5px;
+    border-radius: 20px;
+    margin: 10px;
+    color: #273469; /* Light purple for text */
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), /* Outer shadow */
+                0px 6px 20px rgba(0, 0, 0, 0.19), /* More diffuse shadow */
+                inset 0px 0px 10px rgba(0, 0, 0, 0.1); /* Inner shadow */
+  }
+  .model-block:hover {
+    transform: translateY(-5px); /* Slight rise effect on hover */
+}
+  #refreshButton {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #273469; /* Matching the text color for consistency */
+    color: white;
+    cursor: pointer;
+    outline: none;
+  }
+
+  #refreshButton:hover {
+      background-color: #3b4a82; /* A slightly lighter shade for hover effect */
+  }
+  #loadingOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+}
+  
+  .model-info h2 {
+    color: #273469; /* Color for model titles */
+    font-weight: bolder;
+  }
+  
+  .model-info p {
+    color: #18244b; /* Color for model descriptions */
+    font-weight: bolder;
+  }
+  
+  .average {
+    color: #399142; /* Light purple color for average */
+  }
+  
+  .very-good {
+    color: #61da4e; /* Light purple color for very good */
+  }
+  
+  .model-metrics {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .metric {
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), /* Outer shadow */
+                0px 6px 20px rgba(0, 0, 0, 0.19), /* More diffuse shadow */
+                inset 0px 0px 10px rgba(0, 0, 0, 0.1); /* Inner shadow */
+  }
+  
+  .metric-value {
+    font-size: 2em; /* Large font size for metric values */
+    color: #FAFAFF; /* Color for metric numbers */
+  }
+  
+  .model-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  
+  .model-actions button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    color: #273469; /* Dark blue for buttons */
+    background-color: var(--dark-khaki); /* Light purple for button backgrounds */
+    cursor: pointer;
+  }
+  
+  .model-actions button:hover {
+    background-color: #30343F; /* Dark hover color */
+    color: #FAFAFF; /* Text color on hover */
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .column {
+    flex: 25%;
+    padding: 20px;
+  }
+
+  .gauge-container {
+    display: flex;
+    justify-content: space-around; /* Adjust as necessary for spacing */
+    align-items: center;
+  }
+  
+  .gauge {
+    text-align: center;
+    position: relative;
+  }
+  
+  .gauge-value {
+    font-size: 3rem; /* Large font size for gauge numbers */
+    font-weight: bold;
+  }
+  
+  .gauge-label {
+    color: #2e44ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem; /* Adjust as necessary */
+  }
+  
+  .info-circle {
+    display: inline-block;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #1E2749; /* Dark blue circle */
+    color: #FAFAFF; /* White text */
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-style: normal;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .table-container {
+    width: 100%;
+    max-width: 1500px; /* Adjust the max width as needed */
+    margin: auto;
+  }
+  
+  .line {
+    height: 2px;
+    background-color: #000; /* Line color */
+    margin: 20px 0;
+  }
+  
+  .custom-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0; /* Space above and below the table */
+  }
+  
+  .custom-table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+  }
+  
+  .col-40 {
+    width: 43%;
+    background-color: #ffffff; /* Dark Cyan color */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), /* Outer shadow */
+                0px 6px 20px rgba(0, 0, 0, 0.19), /* More diffuse shadow */
+                inset 0px 0px 10px rgba(0, 0, 0, 0.1); /* Inner shadow */
+  }
+  
+  .col-20 {
+    width: 14%;
+    padding: 0; /* Remove padding for the inner table */
+  }
+  
+  .inner-table {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .bubble {
+    width: 80px;
+    height: 80px;
+    background-color: #79b8ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto; /* Center the bubble in the cell */
+    box-shadow: 0px 0px 10px #000; /* Optional: Adds a shadow to the bubble */
+    font-weight: bolder;
+  }
+  
+  .rounded-corners {
+    border-radius: 15px;
+  }
+  
+  /* Optional: If you want to ensure that no borders are visible on the table */
+  .custom-table, .custom-table td, .inner-table, .inner-table td {
+    border: none;
+  }
+  .nameheading {
+    color: var(--name-heading);
+    font-size: large;
+    font-weight: bolder;
+  }
+
+  .namecontent {
+    color: var(--name-content);
+    margin-top: 20px;
+    padding-left: 10px;
+  }
+  
+  
+.datasets-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.scrollable {
+  width: 100%;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  margin-bottom: 20px; /* Spacing between components */
+}
+
+.dataset-row {
+  display: flex;
+  justify-content: space-between; /* Space out dataset containers */
+  flex-wrap: wrap; /* Allow the items to wrap to the next line as needed */
+  margin-bottom: 10px; /* Spacing between rows */
+}
+
+.dataset {
+  width: 30%; /* Each dataset takes up 1/3 of the row */
+  margin-bottom: 20px; /* Add spacing between wrapped items */
+  border: 1px solid #ccc;
+  border-radius: 15px; /* Rounded corners */
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.112); /* Optional: shadow for depth */
+  background: white; /* Light background color for datasets */
+}
+.dis-flex {
+  display: flex;
+}
+
+
+.upload-form-container {
+  width: 95%; /* Set the form width */
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 40px;
+  align-items: center;
+  border-radius: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label, form input, form textarea, form button {
+  margin-bottom: 10px; /* Spacing between form elements */
+  width:95%;
+  color: #000;
+}
+
+form input, form textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px; /* Rounded corners */
+}
+
+form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px; /* Rounded corners */
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+
+
+body {
+	font-family: "Inter", sans-serif;
+	color: var(--c-text-primary);
+	background-color: var(--c-background-primary);	
+	
+}
+
+input, button, select, textarea {
+	font: inherit;
+}
+
+.modal {
+	width: 90%;
+	max-width: 1800px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10vh;
+	margin-bottom: 10vh;
+	background-color: #FFF;
+	border-radius: .5rem;
+	box-shadow: 0 5px 15px rgba(#000, .2); 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), /* Outer shadow */
+                0px 6px 20px rgba(0, 0, 0, 0.19), /* More diffuse shadow */
+                inset 0px 0px 10px rgba(0, 0, 0, 0.1); /* Inner shadow */
+}
+
+.modal-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: 1.5rem 1.5rem 1rem;
+}
+
+.logo-circle {
+	width: 3.5rem;
+	height: 3.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	background-color: var(--c-action-primary-accent);
+	svg {
+		max-width: 1.5rem;
+	}
+}
+
+.btn-close {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: .25rem;
+	border: none;
+	background-color: transparent;
+	&:hover, &:focus {
+		background-color: var(--c-action-primary-accent);
+	}
+}
+
+.modal-body {
+	padding: 1rem 1.5rem;
+}
+
+.modal-title {
+	font-weight: 700;
+}
+
+.modal-description {
+	color: var(--c-text-secondary);
+}
+
+.upload-area {
+	margin-top: 1.25rem;
+	border: none;
+	background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23ccc' stroke-width='3' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+	background-color: transparent;
+	padding: 3rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	&:hover, &:focus {
+      color: white;
+      background-color: transparent;
+			}
+} 
+
+.upload-area-icon {
+	display: block;
+	width: 2.25rem;
+	height: 2.25rem;
+	svg {
+		max-height: 100%;
+		max-width: 100%;
+	}
+}
+
+.upload-area-title {
+	margin-top: 1rem;
+	display: block;
+	font-weight: 700;
+		color: var(--c-text-primary);
+}
+
+.upload-area-description {
+		display: block;
+		color: var(--c-text-secondary);
+	strong {
+		color: var(--c-action-primary);
+		font-weight: 700;
+	}
+}
+
+.modal-footer {
+	padding: 1rem 1.5rem 1.5rem;
+	display: flex;
+	justify-content: flex-end;
+	[class*="btn-"] {
+		margin-left: .75rem;
+	}
+}
+
+.btn-secondary, .btn-primary {
+	padding: .5rem 1rem;
+	font-weight: 500;
+	border: 2px solid var(--c-action-secondary);
+	border-radius: .25rem;
+	background-color: transparent;
+}
+
+.btn-primary {
+	color: #FFF;
+	background-color: var(--c-action-primary);
+	border-color: var(--c-action-primary);
+}
+.custom-table tr {
+  display: flex;
+  flex-wrap: wrap;  /* Allows items to wrap onto the next line */
+  align-items: stretch;  /* Ensures that the columns stretch to fill the container */
+}
+
+.col-40, .col-20 {
+  padding: 10px;
+  box-sizing: border-box;  /* Includes padding and border in the element's total width and height */
+}
+
+.col-40 {
+  flex: 0 0 43%;  /* Flex-grow, flex-shrink, flex-basis */
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2),
+              0px 6px 20px rgba(0, 0, 0, 0.19),
+              inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.col-40s {
+  flex: 0 0 45%;  /* Flex-grow, flex-shrink, flex-basis */
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2),
+              0px 6px 20px rgba(0, 0, 0, 0.19),
+              inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+select[multiple] {
+  height: auto; /* Adjust the height based on your needs */
+  overflow-y: auto; /* Allows scrolling within the dropdown */
+}
+
+#selectedInputs .tag {
+  display: inline-block;
+  background-color: #f1f1f1;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 5px;
+}
+
+.tag .remove {
+  margin-left: 5px;
+  cursor: pointer;
+  color: red;
+}
+
+.col-20 {
+  flex: 0 0 14%;  /* Smaller width for the middle column */
+}
+.col-20s {
+  flex: 0 0 4%;  /* Smaller width for the middle column */
+}
+
+.dataset {
+  margin-bottom: 20px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #FFFFFF;
+  transition: box-shadow 0.3s;
+}
+
+.dataset:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dataset-title {
+  color: #0056b3; /* Darker blue for the title */
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.dataset-info {
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.dataset-label {
+  font-weight: bold;
+  color: #333333;
+}
+
+.namecontent {
+  color: #666666; /* Softer color for content */
+  margin-left: 5px; /* Slight adjustment for alignment */
+}
+
+.sidebar {
+  background-color: #2C3E50; /* A deep blue shade for a professional look */
+  color: #ECF0F1;
+  width: 100%; /* Span the full width of the page */
+  padding: 0 20px; /* Top and bottom padding removed */
+  display: flex;
+  justify-content: space-between; /* Distribute space between and around content items */
+  align-items: center; /* Center items vertically */
+  height: 60px; /* Increased height for a better visual ratio */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+.logo-container {
+  flex: 1;
+  display: flex;
+  align-items: center; /* Vertically center logo */
+}
+
+.logo {
+  height: 40px; /* Adjust logo size */
+  cursor: pointer;
+}
+
+.navigation {
+  flex: 3; /* Allows navigation to take more space */
+}
+
+.navigation-menu {
+  display: flex;
+  justify-content: center; /* Center navigation items horizontally
+in the navigation container */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
+  .menu-item {
+    margin: 0 15px; /* Uniform spacing for all sides */
+    }
+    
+    .menu-item a {
+    color: #ECF0F1;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners for hover effect */
+    transition: background-color 0.3s ease;
+    }
+    
+    .menu-item a:hover {
+    background-color: #34495E; /* Slightly darker blue on hover */
+    }
+    
+    .logout-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    }
+    
+    .logout-link {
+    color: #E74C3C; /* A red color for the logout to make it stand out as an important action */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    }
+    
+    .logout-link:hover {
+    color: #C0392B; /* Darker shade of red on hover */
+    }
+    
+@media (max-width: 768px) {
+  .col-40, .col-20 {
+    flex: 0 0 100%;  /* Each column takes full width on small screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .col-40, .col-20, .col-40s, .col-20s {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Sandbox</title>
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename= 'css/styles.css') }}">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body >
+  <header class="sidebar">
+    <div class="logo-container">
+        <img onclick="openModelPage('/home')" src="{{ url_for('static', filename= 'images/logo.webp') }}" alt="Circle Logo" class="logo">
+    </div>
+    <nav class="navigation">
+        <ul class="navigation-menu">
+            <li class="menu-item"><a onclick="openModelPage('Datasets')">Data Sets</a></li>
+            <li class="menu-item"><a onclick="openModelPage('TrainModels')">Train Models</a></li>
+            <li class="menu-item"><a onclick="openModelPage('Pretrained_Models')">Pretrained Models</a></li>
+            <li class="menu-item"><a>Reports</a></li>
+            <li class="menu-item"><a>Settings</a></li>
+        </ul>
+    </nav>
+    <div class="logout-container">
+        <a onclick="openModelPage('logout')">Log out</a>
+    </div>
+</header>
+
+  <div class="main-content">
+    <div class="header">
+      <!-- Header Content -->
+    </div>
+    <div class="metrics">
+      <div class="metric">
+          <h2 class="metric-title">Data Sets</h2>
+          <p class="metric-value">4</p>
+      </div>
+      <div class="metric">
+          <h2 class="metric-title">Models in Pipeline</h2>
+          <p class="metric-value">3</p>
+      </div>
+      <div class="metric">
+          <h2 class="metric-title">Current Running</h2>
+          <p class="metric-value">Gradient Boosting</p>
+      </div>
+      <div class="metric">
+          <h2 class="metric-title">Total Processed</h2>
+          <p class="metric-value">12</p>
+      </div>
+  </div>
+  
+    
+    <div id="modelContainers"></div>
+    
+</body>
+<script>
+  // Function to open the model page
+  function openModelPage(pageName) {
+    window.location.href = pageName;
+  }
+  // Function to open the model page with model details
+function openModelcardPage(modelName) {
+    window.location.href = `/model_card?model_name=${modelName}`;
+}
+
+window.addEventListener('load', function() {
+    fetch('/get-trained-models')
+        .then(response => response.json())
+        .then(models => {
+            const container = document.getElementById('modelContainers');
+            models.forEach(model => {
+                const modelContainer = document.createElement('div');
+                modelContainer.className = 'model-container';
+                modelContainer.onclick = () => openModelcardPage(model.model_name); // Setup redirect on click
+                modelContainer.innerHTML = `
+                    <div class="model-block row">
+                        <div class="model-info column">
+                            <h2>${model.model_name}</h2>
+                            <div style="display: flex; align-items: stretch; ">
+                            <p style="flex-grow: 1">Status: <span class="${model.status}">${model.status}</span></p>
+                            <p style="flex-grow: 1">Model accuracy: <span class="average">${model.accuracy || '0'}</span></p>
+                            <p style="flex-grow: 1">Model rmse: <span class="very-good">${model.rmse || '0'}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(modelContainer);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+</script>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Sandbox</title>
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename= 'css/styles.css') }}">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body >
+
+    <header class="sidebar">
+        <div class="logo-container">
+            <img onclick="openModelPage('/home')" src="{{ url_for('static', filename= 'images/logo.webp') }}" alt="Circle Logo" class="logo">
+        </div>
+        <nav class="navigation">
+            <ul class="navigation-menu">
+                <li class="menu-item"><a onclick="openModelPage('Datasets')">Data Sets</a></li>
+                <li class="menu-item"><a onclick="openModelPage('TrainModels')">Train Models</a></li>
+                <li class="menu-item"><a onclick="openModelPage('Pretrained_Models')">Pretrained Models</a></li>
+                <li class="menu-item"><a>Reports</a></li>
+                <li class="menu-item"><a>Settings</a></li>
+            </ul>
+        </nav>
+        <div class="logout-container">
+            <a onclick="openModelPage('logout')">Log out</a>
+        </div>
+    </header>
+  <div class="main-content">
+    <div class="header">
+      <!-- Header Content -->
+    </div>
+    
+    
+    <div id="modelContainers">
+        <div onclick="openModelPage('XGBOOST_mc')" class="model-block row">
+            <div class="model-info column">
+                <h2>XGBOOST</h2>
+                <div style="display: flex; align-items: stretch; ">
+                <p style="flex-grow: 1">Status: <span class="$completed">completed</span></p>
+                <p style="flex-grow: 1">Model accuracy: <span class="average">0.98</span></p>
+                <p style="flex-grow: 1">Model rmse: <span class="very-good">0.124</span></p>
+                </div>
+            </div>
+        </div>
+        <div onclick="openModelPage('Linear_mc')" class="model-block row">
+            <div class="model-info column">
+                <h2>Linear Regression</h2>
+                <div style="display: flex; align-items: stretch; ">
+                <p style="flex-grow: 1">Status: <span class="completed">completed</span></p>
+                <p style="flex-grow: 1">Model accuracy: <span class="average">0.94</span></p>
+                <p style="flex-grow: 1">Model rmse: <span class="very-good">0.014</span></p>
+                </div>
+            </div>
+        </div>
+        <div onclick="openModelPage('SVD_mc')" class="model-block row">
+            <div class="model-info column">
+                <h2>SVD</h2>
+                <div style="display: flex; align-items: stretch; ">
+                <p style="flex-grow: 1">Status: <span class="completed">completed</span></p>
+                <p style="flex-grow: 1">Model accuracy: <span class="average">0.89</span></p>
+                <p style="flex-grow: 1">Model rmse: <span class="very-good">1.7</span></p>
+                </div>
+            </div>
+        </div>
+        <div onclick="openModelPage('Random_mc')" class="model-block row">
+            <div class="model-info column">
+                <h2>Random Forest</h2>
+                <div style="display: flex; align-items: stretch; ">
+                <p style="flex-grow: 1">Status: <span class="completed">completed</span></p>
+                <p style="flex-grow: 1">Model accuracy: <span class="average">0.935</span></p>
+                <p style="flex-grow: 1">Model rmse: <span class="very-good">5.46</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script>
+  // Function to open the model page
+  function openModelPage(pageName) {
+    window.location.href = pageName;
+  }
+  // Function to open the model page with model details
+function openModelcardPage(modelName) {
+    window.location.href = `/model_card?model_name=${modelName}`;
+}
+
+</script>
+</html>

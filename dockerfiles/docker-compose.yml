@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  circle1:
+    container_name: circle1
+    image: circle1
+    build: .
+    environment:
+      - FLASK_RUN_PORT=5060
+    ports:
+      - "5060:5060"
+    networks:
+      - circle
+networks:
+  circle:

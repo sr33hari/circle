@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Sandbox</title>
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename= 'css/styles.css') }}">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+<body >
+
+  <header class="sidebar">
+    <div class="logo-container">
+        <img onclick="openModelPage('/home')" src="{{ url_for('static', filename= 'images/logo.webp') }}" alt="Circle Logo" class="logo">
+    </div>
+    <nav class="navigation">
+        <ul class="navigation-menu">
+            <li class="menu-item"><a onclick="openModelPage('Datasets')">Data Sets</a></li>
+            <li class="menu-item"><a onclick="openModelPage('TrainModels')">Train Models</a></li>
+            <li class="menu-item"><a onclick="openModelPage('Pretrained_Models')">Pretrained Models</a></li>
+            <li class="menu-item"><a>Reports</a></li>
+            <li class="menu-item"><a>Settings</a></li>
+        </ul>
+    </nav>
+    <div class="logout-container">
+        <a onclick="openModelPage('logout')">Log out</a>
+    </div>
+</header>
+  
+    <div class="main-content">
+        
+        <div class="model-block" style="margin: 2px; margin-top: 50px; padding: 20px;"><h1 style="margin: 2px; "> Train Models </h1> </div>
+
+        
+        <form  id="trainModelForm">
+          <div class="modal">
+            <div class="modal-header">
+              <div class="modal-logo">
+                <span class="logo-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="419.116" viewBox="0 0 512 419.116">
+                    <img src="{{ url_for('static', filename= 'images/AI-PNG-HD.png') }}" alt="AI Logo" style="width:140%;">
+                    <defs>
+                      <clipPath id="clip-folder-new">
+                        <rect width="512" height="419.116" />
+                      </clipPath>
+                    </defs>
+                    <g id="folder-new" clip-path="url(#clip-folder-new)">
+                      <path id="Union_1" data-name="Union 1" d="M16.991,419.116A16.989,16.989,0,0,1,0,402.125V16.991A16.989,16.989,0,0,1,16.991,0H146.124a17,17,0,0,1,10.342,3.513L227.217,57.77H437.805A16.989,16.989,0,0,1,454.8,74.761v53.244h40.213A16.992,16.992,0,0,1,511.6,148.657L454.966,405.222a17,17,0,0,1-16.6,13.332H410.053v.562ZM63.06,384.573H424.722L473.86,161.988H112.2Z" fill="var(--c-action-primary)" stroke="" stroke-width="1" />
+                    </g>
+                  </svg>
+                </span>
+              </div>
+              <button class="btn-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" fill="var(--c-text-secondary)"/></svg>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div  style="display: flex;">
+              <label for="name"><p class="nameheading" style="color: #000;">Model Name:</p> </label>
+              <input type="text" id="name" name="name" required>
+              </div>
+              <div  style="display: flex;">
+              <label for="Dataset"><p class="nameheading" style="color: #000;">Dataset:</p> </label>
+
+            <select name="Dataset" id="Dataset" style="padding: 10px 20px;
+            border-color: grey;
+              width:60% ;
+              border-radius: 4px; /* Rounded corners */
+              background-color: white;
+              color: black;
+              cursor: pointer;
+              margin-top: 10px;
+              margin-bottom: 10px;">
+              <option value="Credit loan">Credit loan</option>
+              <option value="housing">housing</option>
+              <option value="data1">data1</option>
+              <option value="data2">data2</option>
+            </select>
+              </div>
+            <div  style="display: flex;">
+              <label for="Model"><p class="nameheading" style="color: #000;">Model:</p> </label>
+
+              <select name="Dataset" id="Model" style="padding: 10px 20px;
+              border-color: grey;
+              width:60% ;
+              border-radius: 4px; /* Rounded corners */
+              background-color: white;
+              color: black;
+              cursor: pointer;
+              margin-top: 10px;
+              margin-bottom: 10px;">
+                <option value="XGBOOST">XGBOOST</option>
+                <option value="DecisionTree">DecisionTree</option>
+                <option value="LinearRegression">LinearRegression</option>
+                <option value="RandomForest">RandomForest</option>
+                <option value="SVM">SVM</option>
+                <option value="AdaBoost">AdaBoost</option>
+                <option value="NeuralNetwork">NeuralNetwork</option>
+              </select>
+            </div >
+            <div style="display: flex; flex-direction: column;">
+              <label for="inputVariables"><p class="nameheading" style="color: #000;">Input Variables:</p></label>
+              <select multiple name="inputVariables" id="inputVariables" style="padding: 10px 20px; height: 100px; overflow-y: scroll; border-color: grey; width:60%; border-radius: 4px; background-color: white; color: black; cursor: pointer; margin-top: 10px; margin-bottom: 10px;">
+                  <!-- Options will be dynamically loaded based on the dataset selection -->
+              </select>
+              <div id="selectedInputs" style="margin-top: 10px;"></div>
+            </div>
+          
+          
+            <div  style="display: flex;">
+              <label for="trainPercent"><p class="nameheading" style="color: #000;">Train data percentage:</p> </label>
+
+              <input type="number" id="trainPercent" name="trainPercent" min="10" max="100" />
+            </div>
+            <div style="display: flex;">
+              <label for="outputVariable"><p class="nameheading" style="color: #000;">Output Variable Name:</p></label>
+              <select name="outputVariable" id="outputVariable" style="padding: 10px 20px; border-color: grey; width:60%; border-radius: 4px; background-color: white; color: black; cursor: pointer; margin-top: 10px; margin-bottom: 10px;">
+                  <!-- Options will be dynamically loaded based on the dataset selection -->
+              </select>
+          </div>
+                
+              
+            </div>
+            <div class="modal-footer">
+              
+              <button class="btn-primary" type="submit">Train Model</button>
+  
+            </div>
+  
+          </div>
+        </form>
+    </div>
+
+    <script>
+      function openModelPage(pageName) {
+        window.location.href = pageName;
+      }
+
+      document.getElementById('Dataset').addEventListener('change', function() {
+      const datasetName = this.value;
+      fetch(`/get-dataset-columns?dataset=${datasetName}`)
+          .then(response => response.json())
+          .then(data => {
+              const outputVariableSelect = document.getElementById('outputVariable');
+              const inputVariableSelect = document.getElementById('inputVariables');
+              outputVariableSelect.innerHTML = ''; // Clear existing options
+              inputVariableSelect.innerHTML = ''; // Clear existing options for input variables
+
+              data.columns.forEach(column => {
+                  const outputOption = new Option(column, column);
+                  const inputOption = new Option(column, column);
+                  outputVariableSelect.add(outputOption);
+                  inputVariableSelect.add(inputOption);
+              }); 
+          })
+          .catch(error => console.error('Error fetching columns:', error));
+      });
+
+      window.addEventListener('load', function() {
+      fetch('/get-datasets-for-user') 
+        .then(response => response.json())
+        .then(data => {
+            if (data.datasets) {
+                const datasetSelect = document.getElementById('Dataset');
+                datasetSelect.innerHTML = ''; // Clear existing options
+                data.datasets.forEach(dataset => {
+                    const option = new Option(dataset, dataset);
+                    datasetSelect.add(option);
+                });
+                datasetSelect.dispatchEvent(new Event('change')); // Trigger change event to load initial output variables
+            }
+        })
+        .catch(error => console.error('Error fetching datasets:', error));
+      });
+
+
+      document.getElementById('inputVariables').addEventListener('change', function() {
+          const selectedItemsContainer = document.getElementById('selectedInputs');
+          // selectedItemsContainer.innerHTML = ''; // Clear previous tags
+
+          Array.from(this.selectedOptions).forEach(option => {
+              const tag = document.createElement('span');
+              tag.className = 'tag';
+              tag.textContent = option.text;
+              const removeBtn = document.createElement('span');
+              removeBtn.textContent = '×';
+              removeBtn.className = 'remove';
+              removeBtn.onclick = function() {
+                  option.selected = false;
+                  tag.remove();
+              };
+              tag.appendChild(removeBtn);
+              selectedItemsContainer.appendChild(tag);
+          });
+      });
+
+      document.getElementById('trainModelForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const selectedInputs = Array.from(document.getElementById('inputVariables').selectedOptions).map(option => option.value);
+          console.log(document.getElementById('selectedInputs').innerHTML);
+          const formData = {
+              model_name: document.getElementById('name').value,
+              model_type: document.getElementById('Model').value,
+              dataset_name: document.getElementById('Dataset').value,
+              training_size: document.getElementById('trainPercent').value,
+              output_variable_name: document.getElementById('outputVariable').value,
+              input_variables: document.getElementById('selectedInputs').innerHTML
+          };
+
+          fetch('/train_models_pipeline', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          })
+          .then(response => response.json())
+          .then(data => {
+              alert(data.message);
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Failed to train model.');
+          });
+    });
+
+  </script>
+      
+</body>
+</html>

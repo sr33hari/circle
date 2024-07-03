@@ -1,0 +1,68 @@
+{
+    "user_data": {
+        "pruthvi": {
+            "test": {
+                "description": "test4",
+                "num_rows": 20640,
+                "num_columns": 10,
+                "columns": "longitude,latitude,housing_median_age,total_rooms,total_bedrooms,population,households,median_income,median_house_value,ocean_proximity"
+            },
+            "test2": {
+                "description": "test2",
+                "num_rows": 20640,
+                "num_columns": 10,
+                "columns": "longitude,latitude,housing_median_age,total_rooms,total_bedrooms,population,households,median_income,median_house_value,ocean_proximity"
+            },
+            "test3": {
+                "description": "test3",
+                "num_rows": 398,
+                "num_columns": 9,
+                "columns": "mpg,cylinders,displacement,horsepower,weight,acceleration,model year,origin,car name"
+            },
+            "test 4": {
+                "description": "test 4 description",
+                "num_rows": 398,
+                "num_columns": 9,
+                "columns": "mpg,cylinders,displacement,horsepower,weight,acceleration,model year,origin,car name"
+            }
+        }
+    },
+    "global_data": {
+        "california_housing": {
+            "description": "The California Housing dataset, known for its role in regression analysis education, offers insights into housing values across California's districts based on the 1990 census data.",
+            "num_rows": "20641",
+            "num_columns": "11",
+            "columns": "longitude,latitude,housing_median_age,total_rooms,total_bedrooms,population,households,median_income,median_house_value,ocean_proximity"
+        },
+        "adult_income": {
+            "description": "Extraction was done by Barry Becker from the 1994 Census database.  A set of reasonably clean records was extracted using the following conditions: ((AAGE>16) && (AGI>100) && (AFNLWGT>1)&& (HRSWK>0)) Prediction task is to determine whether a person makes over 50K a year.",
+            "num_rows": "32562",
+            "num_columns": "14",
+            "columns": "age, workclass, gov, education-num, acdm, marital-status, occupation, relationship, race, sex, capital-gain, capital-loss, hours-per-week, native-country"
+        },
+        "Online_News_Popularity": {
+            "description": "This dataset summarizes a heterogeneous set of features about articles published by Mashable in a period of two years. The goal is to predict the number of shares in social networks, i.e. how popular any given article is. The dataset is publicly available at University of California Irvine Machine Learning Repository",
+            "num_rows": "39645",
+            "num_columns": "61",
+            "columns": "url, timedelta, n_tokens_title, n_tokens_content, n_unique_tokens, n_non_stop_words, n_non_stop_unique_tokens, num_hrefs, num_self_hrefs, num_imgs, num_videos, average_token_length, num_keywords, data_channel_is_lifestyle, data_channel_is_entertainment, data_channel_is_bus, data_channel_is_socmed, data_channel_is_tech, data_channel_is_world, kw_min_min, kw_max_min, kw_avg_min, kw_min_max, kw_max_max, kw_avg_max, kw_min_avg, kw_max_avg, kw_avg_avg, self_reference_min_shares, self_reference_max_shares, self_reference_avg_sharess, weekday_is_monday, weekday_is_tuesday, weekday_is_wednesday, weekday_is_thursday, weekday_is_friday, weekday_is_saturday, weekday_is_sunday, is_weekend, LDA_00, LDA_01, LDA_02, LDA_03, LDA_04, global_subjectivity, global_sentiment_polarity, global_rate_positive_words, global_rate_negative_words, rate_positive_words, rate_negative_words, avg_positive_polarity, min_positive_polarity, max_positive_polarity, avg_negative_polarity, min_negative_polarity, max_negative_polarity, title_subjectivity, title_sentiment_polarity, abs_title_subjectivity, abs_title_sentiment_polarity, shares"
+        },
+        "student_performance": {
+            "description": "The Student Performance dataset sheds light on students academic achievements in secondary education, particularly in two Portuguese schools.",
+            "num_rows": "649",
+            "num_columns": "33",
+            "columns": "school,sex,age,address,famsize,Pstatus,Medu,Fedu,Mjob,Fjob,reason,guardian,traveltime,studytime,failures,schoolsup,famsup,paid,activities,nursery,higher,internet,romantic,famrel,freetime,goout,Dalc,Walc,health,absences,G1,G2,G3"
+        },
+        "compas-scores": {
+            "description": " Machine Bias, examines COMPAS, a widely used algorithm for predicting recidivism. We analyze its accuracy and assess bias in its outcomes using data from Broward County (2013-2014), along with R and Python code and a Jupyter notebook.",
+            "num_rows": "11758",
+            "num_columns": "47",
+            "columns": "id,name,first,last,compas_screening_date,sex,dob,age,age_cat,race,juv_fel_count,decile_score,juv_misd_count,juv_other_count,priors_count,days_b_screening_arrest,c_jail_in,c_jail_out,c_case_number,c_offense_date,c_arrest_date,c_days_from_compas,c_charge_degree,c_charge_desc,is_recid,num_r_cases,r_case_number,r_charge_degree,r_days_from_arrest,r_offense_date,r_charge_desc,r_jail_in,r_jail_out,is_violent_recid,num_vr_cases,vr_case_number,vr_charge_degree,vr_offense_date,vr_charge_desc,v_type_of_assessment,v_decile_score,v_score_text,v_screening_date,type_of_assessment,decile_score,score_text,screening_date"
+        },
+        "german": {
+            "description": "This data set includes descriptions of hypothetical samples corresponding to 23 species of gilled mushrooms in the Agaricus and Lepiota Family (pp. 500-525).  Each species is identified as definitely edible, definitely poisonous, or of unknown edibility and not recommended.",
+            "num_rows": "1000",
+            "num_columns": "20",
+            "columns": "Status of existing checking account,Duration in month,Credit history,Purpose,Credit amount,Savings account,Present employment,Installment rate, Personal status and sex, Other debtors ,Present residence since, Property,Age ,installment plans, Housing, Number of existing credits ,Job,Number of people being liable, Telephone,foreign worker"
+        }
+    }
+}
