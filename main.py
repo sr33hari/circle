@@ -336,6 +336,8 @@ from sklearn.tree import DecisionTreeRegressor
 import xgboost as xgb
 from math import sqrt
 import shap
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 def train_model(model_name, model_type, dataset_name, output_variable_name, training_size,input_vars):
