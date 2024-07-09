@@ -1,0 +1,7 @@
+project_id            = "circle-425516"
+region                = "us-west2"
+zone                  = "us-west2-b"
+repository_id         = "circle-artifacts"
+service_account_email = "circle-service-account@circle-425516.iam.gserviceaccount.com"
+image_tag             = "latest"
+mongo_uri             = "mongodb+srv://highhari:harilovesmongo@ciclecluster.1t5nbzl.mongodb.net/?retryWrites=true&w=majority&tls=true&appName=CicleCluster"

@@ -12,6 +12,7 @@ from googleapiclient.http import MediaFileUpload
 from gspread.exceptions import SpreadsheetNotFound
 from googleapiclient.http import MediaIoBaseDownload
 from google.oauth2 import service_account
+from google.auth import default
 import gspread #library for google sheets
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -66,7 +67,8 @@ def update_json_file_with_datasets(user_name):
         json.dump(updated_data, json_file, indent=4)
 
 def get_datasets_update(user_name, data):
-    creds = ServiceAccountCredentials.from_json_keyfile_name("circle-418602-8aee1aeb2f00.json",scope)
+    creds, _ = default()
+    # creds = ServiceAccountCredentials.from_json_keyfile_name("circle-418602-8aee1aeb2f00.json",scope)
     gc = gspread.authorize(creds)
     try: 
         sheet = gc.open('circle datasets').sheet1
@@ -109,8 +111,9 @@ def download_google_sheet_as_csv(file_id, local_file_path, credentials_json='cir
     """
     
     # Authenticate and create the Drive v3 API client
-    credentials = service_account.Credentials.from_service_account_file(credentials_json, scopes=['https://www.googleapis.com/auth/drive.readonly'])
-    service = build('drive', 'v3', credentials=credentials)
+    creds, _ = default()
+    # credentials = service_account.Credentials.from_service_account_file(credentials_json, scopes=['https://www.googleapis.com/auth/drive.readonly'])
+    service = build('drive', 'v3', credentials=creds)
     
     # Ensure the local directory exists
     local_folder_path = local_file_path
@@ -158,7 +161,8 @@ def upload_file():
     file_path = os.path.join('/tmp', file.filename)
     file.save(file_path)
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name("circle-418602-8aee1aeb2f00.json",scope)
+    creds, _ = default()
+    # creds = ServiceAccountCredentials.from_json_keyfile_name("circle-418602-8aee1aeb2f00.json",scope)
     drive_service = build('drive', 'v3', credentials=creds)
 
     file_metadata = {
@@ -619,7 +623,8 @@ def register():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    print("not found")
+    # return render_template('404.html'), 404
 
 
 if __name__ == "__main__":
