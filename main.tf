@@ -65,17 +65,6 @@ resource "google_compute_instance" "circle_instance" {
     goog-ec-src  = "vm_add-tf"
   }
 
-          GOOGLE_TYPE: ${{ secrets.GOOGLE_TYPE }}
-          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
-          GOOGLE_PRIVATE_KEY_ID: ${{ secrets.GOOGLE_PRIVATE_KEY_ID }}
-          GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
-          GOOGLE_CLIENT_EMAIL: ${{ secrets.GOOGLE_CLIENT_EMAIL }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_AUTH_URI: ${{ secrets.GOOGLE_AUTH_URI }}
-          GOOGLE_TOKEN_URI: ${{ secrets.GOOGLE_TOKEN_URI }}
-          GOOGLE_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GOOGLE_AUTH_PROVIDER_X509_CERT_URL }}
-          GOOGLE_CLIENT_X509_CERT_URL: ${{ secrets.GOOGLE_CLIENT_X509_CERT_URL }}
-          GOOGLE_UNIVERSE_DOMAIN: ${{ secrets.GOOGLE_UNIVERSE_DOMAIN }}
   metadata = {
     gce-container-declaration = <<-EOF
       spec:
