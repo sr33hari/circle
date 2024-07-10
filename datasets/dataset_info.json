@@ -25,6 +25,20 @@
                 "num_columns": 9,
                 "columns": "mpg,cylinders,displacement,horsepower,weight,acceleration,model year,origin,car name"
             }
+        },
+        "harii": {
+            "test1": {
+                "description": "test1",
+                "num_rows": 420,
+                "num_columns": 10,
+                "columns": "Track,Position,No,Driver,Team,Starting Grid,Laps,Total Time/Gap/Retirement,Points,Fastest Lap"
+            },
+            "testrandom": {
+                "description": "big shaq",
+                "num_rows": 150,
+                "num_columns": 8,
+                "columns": "Tech_Cat,Target,MPSS,Week,Operator,Infra,ValidationList,CallTypeJson"
+            }
         }
     },
     "global_data": {

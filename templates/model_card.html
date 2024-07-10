@@ -195,6 +195,7 @@
       document.getElementById('dependencyPlotTable').style.display = 'none';
     }
     function handlesummaryImageError() {
+      console.log("in error")
       document.getElementById('summaryPlotTable').style.display = 'none';
     }
     function handlebarImageError() {
@@ -232,10 +233,10 @@
       console.log("updating src name")
 
       document.getElementById('summaryPlot').src = `/static/images/${model.user_name}/shap_summary_${model.model_name}.png`;
-
+      window.onload = updateModelCard(model);
     }
 
-    window.onload = updateModelCard(model);
+    
   </script>
 </body>
 </html>

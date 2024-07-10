@@ -65,6 +65,17 @@ resource "google_compute_instance" "circle_instance" {
     goog-ec-src  = "vm_add-tf"
   }
 
+          GOOGLE_TYPE: ${{ secrets.GOOGLE_TYPE }}
+          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+          GOOGLE_PRIVATE_KEY_ID: ${{ secrets.GOOGLE_PRIVATE_KEY_ID }}
+          GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
+          GOOGLE_CLIENT_EMAIL: ${{ secrets.GOOGLE_CLIENT_EMAIL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_AUTH_URI: ${{ secrets.GOOGLE_AUTH_URI }}
+          GOOGLE_TOKEN_URI: ${{ secrets.GOOGLE_TOKEN_URI }}
+          GOOGLE_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GOOGLE_AUTH_PROVIDER_X509_CERT_URL }}
+          GOOGLE_CLIENT_X509_CERT_URL: ${{ secrets.GOOGLE_CLIENT_X509_CERT_URL }}
+          GOOGLE_UNIVERSE_DOMAIN: ${{ secrets.GOOGLE_UNIVERSE_DOMAIN }}
   metadata = {
     gce-container-declaration = <<-EOF
       spec:
@@ -74,6 +85,28 @@ resource "google_compute_instance" "circle_instance" {
           env:
           - name: MONGO_URI
             value: ${var.mongo_uri}
+          - name: GOOGLE_TYPE
+            value: ${var.GOOGLE_TYPE}
+          - name: GOOGLE_PROJECT_ID
+            value: ${var.GOOGLE_PROJECT_ID}
+          - name: GOOGLE_PRIVATE_KEY_ID
+            value: ${var.GOOGLE_PRIVATE_KEY_ID}
+          - name: GOOGLE_PRIVATE_KEY
+            value: ${var.GOOGLE_PRIVATE_KEY}
+          - name: GOOGLE_CLIENT_EMAIL
+            value: ${var.GOOGLE_CLIENT_EMAIL}
+          - name: GOOGLE_CLIENT_ID
+            value: ${var.GOOGLE_CLIENT_ID}
+          - name: GOOGLE_AUTH_URI
+            value: ${var.GOOGLE_AUTH_URI}
+          - name: GOOGLE_TOKEN_URI
+            value: ${var.GOOGLE_TOKEN_URI}
+          - name: GOOGLE_AUTH_PROVIDER_X509_CERT_URL
+            value: ${var.GOOGLE_AUTH_PROVIDER_X509_CERT_URL}
+          - name: GOOGLE_CLIENT_X509_CERT_URL
+            value: ${var.GOOGLE_CLIENT_X509_CERT_URL}
+          - name: GOOGLE_UNIVERSE_DOMAIN
+            value: ${var.GOOGLE_UNIVERSE_DOMAIN}
           stdin: false
           tty: false
         restartPolicy: OnFailure

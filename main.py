@@ -1,7 +1,7 @@
 import db
 from db import insert_training_model,update_model_record, return_training_models
 import json
-from flask import Flask, request, render_template, redirect, session, jsonify
+from flask import Flask, request, render_template, redirect, session, jsonify, url_for
 # from flask_cors import CORS
 import re
 import os
@@ -37,6 +37,7 @@ app.secret_key = secret_key
 
 scope =  [
     'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive.file'
     ]
 
@@ -44,115 +45,130 @@ datasets_file_path = "datasets/dataset_info.json"
 with open(datasets_file_path, 'r') as file:
         datasets_all_information= json.load(file)
 
+def get_google_credentials_from_env():
+    credentials = {
+        "type": os.getenv("GOOGLE_TYPE"),
+        "project_id": os.getenv("GOOGLE_PROJECT_ID"),
+        "private_key_id": os.getenv("GOOGLE_PRIVATE_KEY_ID"),
+        "private_key": os.getenv("GOOGLE_PRIVATE_KEY"),
+        "client_email": os.getenv("GOOGLE_CLIENT_EMAIL"),
+        "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+        "auth_uri": os.getenv("GOOGLE_AUTH_URI"),
+        "token_uri": os.getenv("GOOGLE_TOKEN_URI"),
+        "auth_provider_x509_cert_url": os.getenv("GOOGLE_AUTH_PROVIDER_X509_CERT_URL"),
+        "client_x509_cert_url": os.getenv("GOOGLE_CLIENT_X509_CERT_URL"),
+        "universe_domain": os.getenv("GOOGLE_UNIVERSE_DOMAIN")
+    }
+    credentials['private_key'] = credentials['private_key'].replace('\\n', '\n')
+    credentials_json_str = json.dumps(credentials)
+    credentials_json = json.loads(credentials_json_str)
+    
+    return credentials_json
+
 
 @app.route('/update_datasets')
 def update_datasets():
     user_name = session.get('username')
     if not user_name:
+        logging.warning('User not logged in or user_name not set in session')
         return jsonify({'error': 'User not logged in or user_name not set in session'}), 401
 
-    update_json_file_with_datasets(user_name)
-    return jsonify({'success': True})
+    try:
+        logging.info(f'Updating datasets for user: {user_name}')
+        update_json_file_with_datasets(user_name)
+        logging.info('Datasets updated successfully')
+        return jsonify({'success': True})
+    except Exception as e:
+        logging.error(f'Error updating datasets: {e}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
 
 def update_json_file_with_datasets(user_name):
-    # Load the existing JSON file
-    with open(datasets_file_path, 'r') as json_file:
-        data = json.load(json_file)
-    
-    # Assume this is the function that updates the 'data' dictionary
-    updated_data = get_datasets_update(user_name, data)
+    try:
+        # Ensure user directory exists
+        user_dir = os.path.join(os.getcwd(), user_name)
+        if not os.path.exists(user_dir):
+            os.makedirs(user_dir)
+            logging.info(f'Created directory for user: {user_dir}')
 
-    # Write the updated data back to the file
-    with open(datasets_file_path, 'w') as json_file:
-        json.dump(updated_data, json_file, indent=4)
+        logging.info('Loading the existing JSON file')
+        with open(datasets_file_path, 'r') as json_file:
+            data = json.load(json_file)
+        
+        logging.info('Updating JSON file with datasets')
+        updated_data = get_datasets_update(user_name, data)
+
+        logging.info('Writing updated data back to the file')
+        with open(datasets_file_path, 'w') as json_file:
+            json.dump(updated_data, json_file, indent=4)
+        logging.info('JSON file updated successfully')
+    except Exception as e:
+        logging.error(f'Error in update_json_file_with_datasets: {e}', exc_info=True)
+        raise
 
 def get_datasets_update(user_name, data):
-    creds, _ = default()
-    # creds = ServiceAccountCredentials.from_json_keyfile_name("circle-418602-8aee1aeb2f00.json",scope)
-    gc = gspread.authorize(creds)
-    try: 
-        sheet = gc.open('circle datasets').sheet1
-    except SpreadsheetNotFound:
-        sh = gc.create('circle datasets')
-        sheet = sh.sheet1
-    records = sheet.get_all_records()
+    try:
+        logging.info('Authorizing Google Sheets API')
+        credentials = get_google_credentials_from_env()
+        print(f"----------------------{credentials}\n\n\n")
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials, scope)
+        # creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+        gc = gspread.authorize(creds)
+        sheet = gc.open('circle user datasets').sheet1
+        
+        logging.info('Fetching records from Google Sheets')
+        records = sheet.get_all_records()
 
-    # Example logic to update the JSON structure based on your needs
-    for record in records:
-        if record['status(approved/not approved)'] == 'approved':
-            # Download CSV, read it, and update data (details skipped)
-            # Assuming dataset_name is unique and used as key
-            dataset_name = record['name']
-            # Placeholder for actual logic to get description, num_rows, num_columns, columns
-            description = record['description']
-            num_rows, num_columns, columns = download_google_sheet_as_csv(record['link'].split("id=")[1],user_name+"/"+dataset_name+".csv")
-            
-            # Update the JSON structure
-            if user_name not in data['user_data']:
-                data['user_data'][user_name] = {}
-            data['user_data'][user_name][dataset_name] = {
-                'description': description,
-                'num_rows': num_rows,
-                'num_columns': num_columns,
-                'columns': columns
-            }
+        for record in records:
+            if record['status(approved/not approved)'] == 'approved':
+                dataset_name = record['name']
+                description = record['description']
+                logging.info(f'Downloading dataset: {dataset_name}')
+                num_rows, num_columns, columns = download_google_sheet_as_csv(record['link'].split("id=")[1], user_name+"/"+dataset_name+".csv")
+                
+                if user_name not in data['user_data']:
+                    data['user_data'][user_name] = {}
+                data['user_data'][user_name][dataset_name] = {
+                    'description': description,
+                    'num_rows': num_rows,
+                    'num_columns': num_columns,
+                    'columns': columns
+                }
+        return data
+    except Exception as e:
+        logging.error(f'Error in get_datasets_update: {e}', exc_info=True)
+        raise
 
-    return data
+def download_google_sheet_as_csv(file_id, local_file_path):
+    try:
+        logging.info('Authenticating and creating the Drive v3 API client')
+        credentials = get_google_credentials_from_env()
+        print(f"----------------------{credentials}\n\n\n")
 
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials, scope)
+        # creds = service_account.Credentials.from_service_account_file(credentials_json, scopes=['https://www.googleapis.com/auth/drive.readonly'])
+        service = build('drive', 'v3', credentials=creds)
 
-def download_google_sheet_as_csv(file_id, local_file_path, credentials_json='circle-418602-8aee1aeb2f00.json'):
-    """
-    Exports a Google Sheets document as a CSV file.
+        # Ensure the local directory exists
+        local_folder_path = os.path.dirname(local_file_path)
+        if not os.path.exists(local_folder_path):
+            os.makedirs(local_folder_path)
+            logging.info(f'Created directory for file: {local_folder_path}')
 
-    Parameters:
-    - file_id: str. The ID of the Google Sheets document to download.
-    - local_file_path: str. The full local file path where the CSV will be saved.
-    - credentials_json: str. The path to the service account key file.
-    """
-    
-    # Authenticate and create the Drive v3 API client
-    creds, _ = default()
-    # credentials = service_account.Credentials.from_service_account_file(credentials_json, scopes=['https://www.googleapis.com/auth/drive.readonly'])
-    service = build('drive', 'v3', credentials=creds)
-    
-    # Ensure the local directory exists
-    local_folder_path = local_file_path
-    
-    
-    # Export the Google Sheets document as CSV
-    request = service.files().export_media(fileId=file_id, mimeType='text/csv')
-    with io.FileIO(local_folder_path, 'w') as fh:
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while not done:
-            status, done = downloader.next_chunk()
-            logging.debug(f"Download progress: {int(status.progress() * 100)}%")
-            print(f"Download progress: {int(status.progress() * 100)}%")
-    
-    print(f"File has been downloaded to '{local_file_path}'")
-    logging.info(f"File has been downloaded to '{local_file_path}'")
-    df= pd.read_csv(local_folder_path)
-    return len(df),len(df.columns),",".join(list(df.columns))
+        logging.info('Exporting the Google Sheets document as CSV')
+        request = service.files().export_media(fileId=file_id, mimeType='text/csv')
+        with io.FileIO(local_file_path, 'w') as fh:
+            downloader = MediaIoBaseDownload(fh, request)
+            done = False
+            while not done:
+                status, done = downloader.next_chunk()
+                logging.debug(f"Download progress: {int(status.progress() * 100)}%")
 
-
-
-def get_confirm_token(response):
-    """Parse the download confirmation token from Google Drive"""
-    for key, value in response.cookies.items():
-        if key.startswith('download_warning'):
-            return value
-    return None
-
-def save_response_content(response, destination):
-    """
-    Save the content of the Google Drive file as specified in the destination.
-    """
-    CHUNK_SIZE = 32768  # 32KB chunks
-
-    with open(destination, "wb") as f:
-        for chunk in response.iter_content(CHUNK_SIZE):
-            if chunk:  # filter out keep-alive new chunks
-                f.write(chunk)
+        logging.info(f"File has been downloaded to '{local_file_path}'")
+        df = pd.read_csv(local_file_path)
+        return len(df), len(df.columns), ",".join(list(df.columns))
+    except Exception as e:
+        logging.error(f'Error in download_google_sheet_as_csv: {e}', exc_info=True)
+        raise
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -161,8 +177,11 @@ def upload_file():
     file_path = os.path.join('/tmp', file.filename)
     file.save(file_path)
 
-    creds, _ = default()
-    # creds = ServiceAccountCredentials.from_json_keyfile_name("circle-418602-8aee1aeb2f00.json",scope)
+    credentials = get_google_credentials_from_env()
+    print(f"----------------------{credentials}\n\n\n")
+
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials, scope)
+    # creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json",scope)
     drive_service = build('drive', 'v3', credentials=creds)
 
     file_metadata = {
@@ -178,18 +197,27 @@ def upload_file():
     drive_service.permissions().create(fileId=file_id, body={'type': 'anyone', 'role': 'reader'}).execute()
 
     # Add details to Google Sheets
-    gc = gspread.service_account(filename='circle-418602-8aee1aeb2f00.json')
+    # gc = gspread.service_account(filename='creds.json')
+    gc = gspread.service_account_from_dict(credentials)
+    from gspread import spreadsheet
     try:
-        sheet = gc.open('circle datasets').sheet1
+        print("trying to open sheets")
+        sheet = gc.open('circle user datasets').sheet1
+        
+        # gc.share('highharii@gmail.com', perm_type='user', role='writer')
+        print(gc.list_spreadsheet_files())
     except SpreadsheetNotFound:
-        sh = gc.create('circle datasets')
+        print("creating new sheet")
+        sh = gc.create('circle user datasets')
+        sh.share('highharii@gmail.com', perm_type='user', role='writer')
         sheet = sh.sheet1
+        sheet.append_row(['user_name', 'name', 'description', 'link', 'status(approved/not approved)'])
 
     # Assuming 'name', 'description' are the IDs of your form inputs
     name = request.form['name']
     description = request.form['description']
     user_name = session.get('username')
-    sheet.append_row([user_name, name, description, file_link,"pending"])
+    sheet.append_row([user_name, name, description, file_link,"approved"])
     
     return jsonify({'success': True, 'link': file_link})        
         
@@ -218,7 +246,6 @@ def datasets():
 def TrainModels():
     return render_template("TrainModels.html")
 
-
 @app.route('/model_card')
 def model_card():
     model_name = request.args.get('model_name')
@@ -231,8 +258,9 @@ def model_card():
         if m["model_name"] == model_name:
             model_details = m
     model_details["user_name"] = session['username'] 
-    logging.info(f"Model card page loaded successfully for model: {model_name}")
+    # print(model_details)
     return render_template("model_card.html", model=model_details)
+
 
 
 @app.route('/signup', methods = ['GET', 'POST'])
@@ -623,7 +651,8 @@ def register():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    print("not found")
+    # print("not found")
+    return "not found"
     # return render_template('404.html'), 404
 
 
