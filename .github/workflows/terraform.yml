@@ -30,6 +30,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Setup Google Cloud Credentials
+        uses: google-github-actions/auth@v2
         run: |
           gcloud auth configure-docker us-west2-docker.pkg.dev
         env:
