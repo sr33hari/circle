@@ -8,6 +8,19 @@ provider "google-beta" {
   region  = var.region
 }
 
+terraform {
+  required_providers {
+    time = {
+      source = "hashicorp/time"
+    }
+  }
+  required_version = ">= 1.8.0"
+}
+
+locals {
+  plan_time = provider::time::rfc3339_parse(plantimestamp())
+}
+
 data "external" "get_artifact_registry_repo" {
   program = ["bash", "gcp.sh"]
   query = {
@@ -32,10 +45,6 @@ resource "google_artifact_registry_repository" "my_repo" {
   }
 
   count = data.external.get_artifact_registry_repo.result.name == "" ? 1 : 0
-}
-
-locals {
-  plan_time = provider::time::rfc3339_parse(plantimestamp())
 }
 
 resource "null_resource" "build_and_push_image" {
