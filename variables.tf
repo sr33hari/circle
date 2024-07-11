@@ -1,26 +1,31 @@
 variable "project_id" {
   description = "The ID of the Google Cloud project"
   type        = string
+  default     = "circle-429006"
 }
 
 variable "region" {
   description = "The region where resources will be deployed"
   type        = string
+  default     = "us-west2"
 }
 
 variable "zone" {
   description = "The zone where the Compute Engine instance will be deployed"
   type        = string
+  default     = "us-west2-b"
 }
 
 variable "repository_id" {
   description = "The ID of the Artifact Registry repository"
   type        = string
+  default     = "circle-artifacts"
 }
 
 variable "service_account_email" {
   description = "Email of the service account to be used"
   type        = string
+  default     = "circle-service@circle-429006.iam.gserviceaccount.com"
 }
 
 variable "image_tag" {
