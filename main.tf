@@ -35,7 +35,7 @@ resource "google_artifact_registry_repository" "my_repo" {
 }
 
 locals {
-  tag = "${timestamp()}"
+  tag = timestamp()
 }
 
 resource "null_resource" "build_and_push_image" {
