@@ -35,15 +35,15 @@ resource "google_artifact_registry_repository" "my_repo" {
 }
 
 locals {
-  tag = timestamp()
+  plan_time = provider::time::rfc3339_parse(plantimestamp())
 }
 
 resource "null_resource" "build_and_push_image" {
   provisioner "local-exec" {
     command = <<EOT
       gcloud auth configure-docker ${var.region}-docker.pkg.dev
-      docker build -t ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${local.tag} ./
-      docker push ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${local.tag}
+      docker build -t ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${local.plan_time.unix} ./
+      docker push ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${local.plan_time.unix}
     EOT
   }
 }
@@ -80,7 +80,7 @@ resource "google_compute_instance" "circle_instance" {
       spec:
         containers:
         - name: circle-instance
-          image: ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${local.tag}
+          image: ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${local.plan_time.unix}
           env:
           - name: MONGO_URI
             value: ${var.MONGO_URI}
