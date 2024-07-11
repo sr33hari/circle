@@ -31,11 +31,9 @@ jobs:
 
       - name: Setup Google Cloud Credentials
         run: |
-          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/gcloud.json
-          gcloud auth activate-service-account --key-file=$HOME/gcloud.json
           gcloud auth configure-docker us-west2-docker.pkg.dev
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
