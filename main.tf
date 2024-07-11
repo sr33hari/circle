@@ -37,6 +37,7 @@ resource "google_artifact_registry_repository" "my_repo" {
 resource "null_resource" "build_and_push_image" {
   provisioner "local-exec" {
     command = <<EOT
+      gcloud auth configure-docker gcr.io
       gcloud auth configure-docker ${var.region}-docker.pkg.dev
       docker build -t ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${var.image_tag} ./
       docker push ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${var.image_tag}
