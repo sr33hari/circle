@@ -31,7 +31,7 @@ variable "service_account_email" {
 variable "image_tag" {
   description = "Tag for the Docker image"
   type        = string
-  default     = "latest"
+  default     = "20240710808"
 }
 
 variable "MONGO_URI" {
