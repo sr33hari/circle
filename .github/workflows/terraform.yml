@@ -33,7 +33,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           TF_VAR_MONGO_URI: ${{ secrets.MONGO_URI }}
           TF_VAR_GOOGLE_TYPE: ${{ secrets.GOOGLE_TYPE }}
           TF_VAR_GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
@@ -52,7 +52,7 @@ jobs:
       - name: Terraform Format
         run: terraform fmt -check
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           TF_VAR_MONGO_URI: ${{ secrets.MONGO_URI }}
           TF_VAR_GOOGLE_TYPE: ${{ secrets.GOOGLE_TYPE }}
           TF_VAR_GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
@@ -70,7 +70,7 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -input=false
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           TF_VAR_MONGO_URI: ${{ secrets.MONGO_URI }}
           TF_VAR_GOOGLE_TYPE: ${{ secrets.GOOGLE_TYPE }}
           TF_VAR_GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
@@ -89,7 +89,7 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           TF_VAR_MONGO_URI: ${{ secrets.MONGO_URI }}
           TF_VAR_GOOGLE_TYPE: ${{ secrets.GOOGLE_TYPE }}
           TF_VAR_GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
