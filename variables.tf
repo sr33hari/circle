@@ -34,7 +34,7 @@ variable "image_tag" {
   default     = "latest"
 }
 
-variable "mongo_uri" {
+variable "MONGO_URI" {
   description = "MongoDB URI for the application"
   type        = string
 }
