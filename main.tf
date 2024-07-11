@@ -79,7 +79,7 @@ resource "google_compute_instance" "circle_instance" {
           image: ${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/circle-app:${var.image_tag}
           env:
           - name: MONGO_URI
-            value: ${var.mongo_uri}
+            value: ${var.MONGO_URI}
           - name: GOOGLE_TYPE
             value: ${var.GOOGLE_TYPE}
           - name: GOOGLE_PROJECT_ID

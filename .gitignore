@@ -1,3 +1,4 @@
+terraform.tfvars
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -164,4 +165,3 @@ cython_debug/
 .DS_Store
 
 set_google_env.sh
-terraform.tfvars
