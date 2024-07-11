@@ -8,11 +8,17 @@ provider "google-beta" {
   region  = var.region
 }
 
-data "google_artifact_registry_repository" "existing_repo" {
-  provider      = google-beta
-  project       = var.project_id
-  location      = var.region
-  repository_id = var.repository_id
+data "external" "get_artifact_registry_repo" {
+  program = ["bash", "gcp.sh"]
+  query = {
+    project_id    = var.project_id
+    region        = var.region
+    repository_id = var.repository_id
+  }
+}
+
+output "artifact_registry_repo" {
+  value = data.external.get_artifact_registry_repo.result.name
 }
 
 resource "google_artifact_registry_repository" "my_repo" {
@@ -25,7 +31,7 @@ resource "google_artifact_registry_repository" "my_repo" {
     env = "main"
   }
 
-  count = length(data.google_artifact_registry_repository.existing_repo.repository_id) == 0 ? 1 : 0
+  count = data.external.get_artifact_registry_repo.result.name == "" ? 1 : 0
 }
 
 resource "null_resource" "build_and_push_image" {
