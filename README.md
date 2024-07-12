@@ -1,26 +1,24 @@
-# login-and-registration-system-using-mongodb
+# Circle Explainable AI application
 
 ## Intrduction
 
-It is a simple login and registration application. This application is developed in HTML, CSS, JS, Python Flask and MongoDB. The project aims to understand how MongoDB works in real-time applications.
+This is an application that aims to educate users about the most influential factors in a dataset when it is trained to predict a certain variable's outcome. 
+It allows users to understand what the machine learning model believes to be the most affecting factors in a given dataset.
 
+There are some pre-trained models that demonstrate this feature and visualizations are generated to help understand these factors.
 
-## Installation
+## Running the application
 
-Install pre-requisites packages
+Ensure you have docker installed on your local system
 
-```
-pip install Flask
-pip install pymongo
-```
-
-## How to run it
-
-You can run the python file by giving this below command on your command prompt.
+Build and run the application by running the following commands.
 
 ```
-python app.py
+docker build -t circle-app .
+docker run -p 8080:8080 circle-app
 ```
+
+This will allow you to view the app in localhost:8080
 
 ## Output
 ### Login (Signin)
@@ -29,29 +27,6 @@ python app.py
 <img src='https://github.com/JafirDon/login-and-registration-system-using-flask-mongodb/blob/main/static/images/output2.JPG' width="50%" ></img> <br><br>
 ### Registration (Signup)
 <img src='https://github.com/JafirDon/login-and-registration-system-using-flask-mongodb/blob/main/static/images/output3.JPG' width="50%" ></img> <br><br>
-
-```
-Working requirements.txt file
-Flask==2.0.3
-pandas==1.3.5
-numpy>1.23.5
-scikit-learn==1.0.2
-xgboost==2.0.3
-shap==0.39.0
-matplotlib==3.4.3
-google-auth==2.3.3
-google-auth-oauthlib==0.4.6
-google-auth-httplib2==0.1.0
-google-api-python-client==2.31.0
-gspread==5.1.1
-oauth2client==4.1.3
-requests==2.26.0
-pymongo==4.0.1
-dnspython==2.1.0
-tensorflow==2.16.1
-keras==3.0.0
-werkzeug==2.0.3
-```
 
 
 ## License
